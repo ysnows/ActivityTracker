@@ -15,22 +15,15 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
 
         checkOverlayPermission();
-
-        findViewById(R.id.btn).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(AccessibilityUtil.checkAccessibility(MainActivity.this)) {
-                    startService(
-                            new Intent(MainActivity.this, TrackerService.class)
-                                    .putExtra(TrackerService.COMMAND, TrackerService.COMMAND_OPEN)
-                    );
-                    finish();
-                }
-            }
-        });
+        if (AccessibilityUtil.checkAccessibility(MainActivity.this)) {
+            startService(
+                    new Intent(MainActivity.this, TrackerService.class)
+                            .putExtra(TrackerService.COMMAND, TrackerService.COMMAND_OPEN)
+            );
+            finish();
+        }
     }
 
     private void checkOverlayPermission() {
